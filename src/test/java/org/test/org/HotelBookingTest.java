@@ -21,7 +21,7 @@ public class HotelBookingTest extends BaseUITest {
     }
 
     @Test
-    public void addBooking() {
+    public void addBooking() throws InterruptedException {
         LOG.info("CREATE BOOKING DETAILS");
         final int price = 200;
         final boolean deposit = new SecureRandom().nextBoolean();
@@ -40,8 +40,8 @@ public class HotelBookingTest extends BaseUITest {
         this.bookingPage.assertRecordPersisted(bookingDetails);
     }
 
-//    @Test
-    public void deleteBooking() {
+    @Test
+    public void deleteBooking() throws InterruptedException {
         LOG.info("CREATE BOOKING DETAILS");
         final int price = 900;
         final boolean deposit = new SecureRandom().nextBoolean();
