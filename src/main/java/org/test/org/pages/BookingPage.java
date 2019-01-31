@@ -3,12 +3,16 @@ package org.test.org.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.test.org.drivers.Driver;
 import org.test.org.helper.BookingDetails;
 import org.testng.Assert;
+
+import java.util.List;
 
 public class BookingPage extends AbstractPage {
     private static final Logger LOG = LoggerFactory.getLogger(BookingPage.class);
@@ -21,8 +25,7 @@ public class BookingPage extends AbstractPage {
     private static final String CHECKOUT = "//input[@id='checkout']";
     private static final String SAVE = "//input[@value=' Save ']";
     private static final String SEARCH_TEXT = "//p[text()='%s']";
-    private static final String PARENT = "//p[text()='%s']//parent";
-    private static final String DELETE = "//input[@value='Delete']";
+        private static final String DELETE = "//input[@value='Delete']";
 
     public BookingPage(Driver browserDriver) {
         super(browserDriver);
@@ -91,7 +94,9 @@ public class BookingPage extends AbstractPage {
 
     public void deleteRecord(final BookingDetails bookingDetails) throws InterruptedException {
         final String searchText = String.format(SEARCH_TEXT, bookingDetails.getFirstName());
-        this.getElementUtil().findElement(By.xpath(searchText)).findElement(By.xpath(DELETE)).click();
+        final List<WebElement> deleteButtons = this.getElementUtil().findElement(By.xpath(searchText)).findElement(By.xpath("..")).findElement(By.xpath("..")).findElements(By.xpath(DELETE));
+        // this is very dirty way of doing this, but could not think off a better way at 2:05 am :-)
+        deleteButtons.get(deleteButtons.size() -1).click();
         Thread.sleep(3000);
     }
 
